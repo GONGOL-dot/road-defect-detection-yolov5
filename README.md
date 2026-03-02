@@ -42,23 +42,14 @@ To request an Enterprise License, please complete the form at [Ultralytics Licen
 </div>
 <br>
 
-## 🚀 YOLO11: The Next Evolution
+# 🚀 Road Defect Detection using YOLOv5
 
-We are excited to announce the launch of **Ultralytics YOLO11** 🚀, the latest advancement in our state-of-the-art (SOTA) vision models! Available now at the [Ultralytics YOLO GitHub repository](https://github.com/ultralytics/ultralytics), YOLO11 builds on our legacy of speed, precision, and ease of use. Whether you're tackling [object detection](https://docs.ultralytics.com/tasks/detect/), [instance segmentation](https://docs.ultralytics.com/tasks/segment/), [pose estimation](https://docs.ultralytics.com/tasks/pose/), [image classification](https://docs.ultralytics.com/tasks/classify/), or [oriented object detection (OBB)](https://docs.ultralytics.com/tasks/obb/), YOLO11 delivers the performance and versatility needed to excel in diverse applications.
+This project is based on YOLOv5 for detecting road defects such as potholes and cracks.
 
-Get started today and unlock the full potential of YOLO11! Visit the [Ultralytics Docs](https://docs.ultralytics.com/) for comprehensive guides and resources:
-
-[![PyPI version](https://badge.fury.io/py/ultralytics.svg)](https://badge.fury.io/py/ultralytics) [![Downloads](https://static.pepy.tech/badge/ultralytics)](https://clickpy.clickhouse.com/dashboard/ultralytics)
-
-```bash
-# Install the ultralytics package
-pip install ultralytics
-```
-
-<div align="center">
-  <a href="https://platform.ultralytics.com/ultralytics/yolo26" target="_blank">
-  <img width="100%" src="https://raw.githubusercontent.com/ultralytics/assets/refs/heads/main/yolo/performance-comparison.png" alt="Ultralytics YOLO Performance Comparison"></a>
-</div>
+Installation:
+git clone https://github.com/ultralytics/yolov5
+cd yolov5
+pip install -r requirements.txt
 
 ## 📚 Documentation
 
