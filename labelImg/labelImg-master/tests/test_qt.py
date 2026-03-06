@@ -1,11 +1,9 @@
-
 from unittest import TestCase
 
 from labelImg import get_main_app
 
 
 class TestMainWindow(TestCase):
-
     app = None
     win = None
 
