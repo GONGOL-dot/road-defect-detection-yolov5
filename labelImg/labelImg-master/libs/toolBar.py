@@ -1,16 +1,15 @@
 try:
-    from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+    from PyQt5.QtGui import *
     from PyQt5.QtWidgets import *
 except ImportError:
-    from PyQt4.QtGui import *
     from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
 
 
 class ToolBar(QToolBar):
-
     def __init__(self, title):
-        super(ToolBar, self).__init__(title)
+        super().__init__(title)
         layout = self.layout()
         m = (0, 0, 0, 0)
         layout.setSpacing(0)
@@ -20,7 +19,7 @@ class ToolBar(QToolBar):
 
     def addAction(self, action):
         if isinstance(action, QWidgetAction):
-            return super(ToolBar, self).addAction(action)
+            return super().addAction(action)
         btn = ToolButton()
         btn.setDefaultAction(action)
         btn.setToolButtonStyle(self.toolButtonStyle())
@@ -29,10 +28,11 @@ class ToolBar(QToolBar):
 
 class ToolButton(QToolButton):
     """ToolBar companion class which ensures all buttons have the same size."""
+
     minSize = (60, 60)
 
     def minimumSizeHint(self):
-        ms = super(ToolButton, self).minimumSizeHint()
+        ms = super().minimumSizeHint()
         w1, h1 = ms.width(), ms.height()
         w2, h2 = self.minSize
         ToolButton.minSize = max(w1, w2), max(h1, h2)
