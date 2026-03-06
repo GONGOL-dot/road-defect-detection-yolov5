@@ -3,4 +3,4 @@ val: dataset/images/val
 
 nc: 3
 
-names: ['pothole', 'crack', 'patch']
+names: ["pothole", "crack", "patch"]
