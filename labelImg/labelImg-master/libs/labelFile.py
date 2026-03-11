@@ -10,8 +10,7 @@ import os.path
 from enum import Enum
 
 from libs.create_ml_io import CreateMLWriter
-from libs.pascal_voc_io import PascalVocWriter
-from libs.pascal_voc_io import XML_EXT
+from libs.pascal_voc_io import XML_EXT, PascalVocWriter
 from libs.yolo_io import YOLOWriter
 
 
@@ -25,7 +24,7 @@ class LabelFileError(Exception):
     pass
 
 
-class LabelFile(object):
+class LabelFile:
     # It might be changed as window creates. By default, using XML ext
     # suffix = '.lif'
     suffix = XML_EXT
@@ -36,23 +35,25 @@ class LabelFile(object):
         self.image_data = None
         self.verified = False
 
-    def save_create_ml_format(self, filename, shapes, image_path, image_data, class_list, line_color=None, fill_color=None, database_src=None):
+    def save_create_ml_format(
+        self, filename, shapes, image_path, image_data, class_list, line_color=None, fill_color=None, database_src=None
+    ):
         img_folder_name = os.path.basename(os.path.dirname(image_path))
         img_file_name = os.path.basename(image_path)
 
         image = QImage()
         image.load(image_path)
-        image_shape = [image.height(), image.width(),
-                       1 if image.isGrayscale() else 3]
-        writer = CreateMLWriter(img_folder_name, img_file_name,
-                                image_shape, shapes, filename, local_img_path=image_path)
+        image_shape = [image.height(), image.width(), 1 if image.isGrayscale() else 3]
+        writer = CreateMLWriter(
+            img_folder_name, img_file_name, image_shape, shapes, filename, local_img_path=image_path
+        )
         writer.verified = self.verified
         writer.write()
         return
 
-
-    def save_pascal_voc_format(self, filename, shapes, image_path, image_data,
-                               line_color=None, fill_color=None, database_src=None):
+    def save_pascal_voc_format(
+        self, filename, shapes, image_path, image_data, line_color=None, fill_color=None, database_src=None
+    ):
         img_folder_path = os.path.dirname(image_path)
         img_folder_name = os.path.split(img_folder_path)[-1]
         img_file_name = os.path.basename(image_path)
@@ -64,25 +65,24 @@ class LabelFile(object):
         else:
             image = QImage()
             image.load(image_path)
-        image_shape = [image.height(), image.width(),
-                       1 if image.isGrayscale() else 3]
-        writer = PascalVocWriter(img_folder_name, img_file_name,
-                                 image_shape, local_img_path=image_path)
+        image_shape = [image.height(), image.width(), 1 if image.isGrayscale() else 3]
+        writer = PascalVocWriter(img_folder_name, img_file_name, image_shape, local_img_path=image_path)
         writer.verified = self.verified
 
         for shape in shapes:
-            points = shape['points']
-            label = shape['label']
+            points = shape["points"]
+            label = shape["label"]
             # Add Chris
-            difficult = int(shape['difficult'])
+            difficult = int(shape["difficult"])
             bnd_box = LabelFile.convert_points_to_bnd_box(points)
             writer.add_bnd_box(bnd_box[0], bnd_box[1], bnd_box[2], bnd_box[3], label, difficult)
 
         writer.save(target_file=filename)
         return
 
-    def save_yolo_format(self, filename, shapes, image_path, image_data, class_list,
-                         line_color=None, fill_color=None, database_src=None):
+    def save_yolo_format(
+        self, filename, shapes, image_path, image_data, class_list, line_color=None, fill_color=None, database_src=None
+    ):
         img_folder_path = os.path.dirname(image_path)
         img_folder_name = os.path.split(img_folder_path)[-1]
         img_file_name = os.path.basename(image_path)
@@ -94,17 +94,15 @@ class LabelFile(object):
         else:
             image = QImage()
             image.load(image_path)
-        image_shape = [image.height(), image.width(),
-                       1 if image.isGrayscale() else 3]
-        writer = YOLOWriter(img_folder_name, img_file_name,
-                            image_shape, local_img_path=image_path)
+        image_shape = [image.height(), image.width(), 1 if image.isGrayscale() else 3]
+        writer = YOLOWriter(img_folder_name, img_file_name, image_shape, local_img_path=image_path)
         writer.verified = self.verified
 
         for shape in shapes:
-            points = shape['points']
-            label = shape['label']
+            points = shape["points"]
+            label = shape["label"]
             # Add Chris
-            difficult = int(shape['difficult'])
+            difficult = int(shape["difficult"])
             bnd_box = LabelFile.convert_points_to_bnd_box(points)
             writer.add_bnd_box(bnd_box[0], bnd_box[1], bnd_box[2], bnd_box[3], label, difficult)
 
@@ -114,7 +112,7 @@ class LabelFile(object):
     def toggle_verify(self):
         self.verified = not self.verified
 
-    ''' ttf is disable
+    """ ttf is disable
     def load(self, filename):
         import json
         with open(filename, 'rb') as f:
@@ -141,7 +139,7 @@ class LabelFile(object):
                     imagePath=imagePath,
                     imageData=b64encode(imageData)),
                     f, ensure_ascii=True, indent=2)
-    '''
+    """
 
     @staticmethod
     def is_label_file(filename):
@@ -150,10 +148,10 @@ class LabelFile(object):
 
     @staticmethod
     def convert_points_to_bnd_box(points):
-        x_min = float('inf')
-        y_min = float('inf')
-        x_max = float('-inf')
-        y_max = float('-inf')
+        x_min = float("inf")
+        y_min = float("inf")
+        x_max = float("-inf")
+        y_max = float("-inf")
         for p in points:
             x = p[0]
             y = p[1]

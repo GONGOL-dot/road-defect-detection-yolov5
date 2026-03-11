@@ -2,12 +2,12 @@ import os
 import pickle
 
 
-class Settings(object):
+class Settings:
     def __init__(self):
         # Be default, the home will be in the same folder as labelImg
         home = os.path.expanduser("~")
         self.data = {}
-        self.path = os.path.join(home, '.labelImgSettings.pkl')
+        self.path = os.path.join(home, ".labelImgSettings.pkl")
 
     def __setitem__(self, key, value):
         self.data[key] = value
@@ -22,7 +22,7 @@ class Settings(object):
 
     def save(self):
         if self.path:
-            with open(self.path, 'wb') as f:
+            with open(self.path, "wb") as f:
                 pickle.dump(self.data, f, pickle.HIGHEST_PROTOCOL)
                 return True
         return False
@@ -30,16 +30,16 @@ class Settings(object):
     def load(self):
         try:
             if os.path.exists(self.path):
-                with open(self.path, 'rb') as f:
+                with open(self.path, "rb") as f:
                     self.data = pickle.load(f)
                     return True
         except:
-            print('Loading setting failed')
+            print("Loading setting failed")
         return False
 
     def reset(self):
         if os.path.exists(self.path):
             os.remove(self.path)
-            print('Remove setting pkl file ${0}'.format(self.path))
+            print(f"Remove setting pkl file ${self.path}")
         self.data = {}
         self.path = None

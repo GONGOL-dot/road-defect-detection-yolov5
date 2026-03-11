@@ -1,5 +1,6 @@
-from ultralytics import YOLO
 import os
+
+from ultralytics import YOLO
 
 # load pretrained model
 model = YOLO("yolov8n.pt")
@@ -12,9 +13,7 @@ os.makedirs(label_dir, exist_ok=True)
 
 # loop all images
 for img in os.listdir(img_dir):
-
     if img.endswith((".jpg", ".png", ".jpeg")):
-
         img_path = os.path.join(img_dir, img)
 
         # predict
