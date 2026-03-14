@@ -24,12 +24,14 @@ sh build-windows-binary.sh
 ```
 
 ### Build for macOS High Sierra
+
 ```
 cd build-tools
 ./build-for-macos.sh
 ```
 
 Note: If there are some problems, try to
+
 ```
 sudo rm -rf virtual-wne venv_wine
 ```
