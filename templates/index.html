@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YOLO Detection</title>
+</head>
+<body style="text-align:center; margin-top:80px; font-family:Arial;">
+
+    <h1>Upload Image for Detection</h1>
+
+    <form action="/detect" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <br><br>
+        <button type="submit">Detect</button>
+    </form>
+    {% if result_image %}
+    <h3>Result:</h3>
+    <img src="/{{ result_image }}" width="500">
+{% endif %}
+
+</body>
+</html>
