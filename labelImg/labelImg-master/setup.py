@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages, Command
-from sys import platform as _platform
-from shutil import rmtree
-import sys
 import os
+import sys
+from shutil import rmtree
+from sys import platform as _platform
+
+from setuptools import Command, find_packages, setup
 
 here = os.path.abspath(os.path.dirname(__file__))
-NAME = 'labelImg'
-REQUIRES_PYTHON = '>=3.0.0'
-REQUIRED_DEP = ['pyqt5', 'lxml']
+NAME = "labelImg"
+REQUIRES_PYTHON = ">=3.0.0"
+REQUIRED_DEP = ["pyqt5", "lxml"]
 about = {}
 
-with open(os.path.join(here, 'libs', '__init__.py')) as f:
+with open(os.path.join(here, "libs", "__init__.py")) as f:
     exec(f.read(), about)
 
 with open("README.rst", "rb") as readme_file:
@@ -25,32 +25,30 @@ with open("HISTORY.rst", "rb") as history_file:
 # OS specific settings
 SET_REQUIRES = []
 if _platform == "linux" or _platform == "linux2":
-   # linux
-   print('linux')
+    # linux
+    print("linux")
 elif _platform == "darwin":
-   # MAC OS X
-   SET_REQUIRES.append('py2app')
+    # MAC OS X
+    SET_REQUIRES.append("py2app")
 
 required_packages = find_packages()
-required_packages.append('labelImg')
+required_packages.append("labelImg")
 
-APP = [NAME + '.py']
-OPTIONS = {
-    'argv_emulation': True,
-    'iconfile': 'resources/icons/app.icns'
-}
+APP = [NAME + ".py"]
+OPTIONS = {"argv_emulation": True, "iconfile": "resources/icons/app.icns"}
+
 
 class UploadCommand(Command):
     """Support setup.py upload."""
 
-    description=readme + '\n\n' + history,
+    description = (readme + "\n\n" + history,)
 
     user_options = []
 
     @staticmethod
     def status(s):
         """Prints things in bold."""
-        print('\033[1m{0}\033[0m'.format(s))
+        print(f"\033[1m{s}\033[0m")
 
     def initialize_options(self):
         pass
@@ -60,22 +58,21 @@ class UploadCommand(Command):
 
     def run(self):
         try:
-            self.status('Removing previous builds…')
-            rmtree(os.path.join(here, 'dist'))
+            self.status("Removing previous builds…")
+            rmtree(os.path.join(here, "dist"))
         except OSError:
-            self.status('Fail to remove previous builds..')
+            self.status("Fail to remove previous builds..")
             pass
 
-        self.status('Building Source and Wheel (universal) distribution…')
-        os.system(
-            '{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        self.status("Building Source and Wheel (universal) distribution…")
+        os.system(f"{sys.executable} setup.py sdist bdist_wheel --universal")
 
-        self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
+        self.status("Uploading the package to PyPI via Twine…")
+        os.system("twine upload dist/*")
 
-        self.status('Pushing git tags…')
-        os.system('git tag -d v{0}'.format(about['__version__']))
-        os.system('git tag v{0}'.format(about['__version__']))
+        self.status("Pushing git tags…")
+        os.system("git tag -d v{}".format(about["__version__"]))
+        os.system("git tag v{}".format(about["__version__"]))
         # os.system('git push --tags')
 
         sys.exit()
@@ -84,42 +81,38 @@ class UploadCommand(Command):
 setup(
     app=APP,
     name=NAME,
-    version=about['__version__'],
+    version=about["__version__"],
     description="LabelImg is a graphical image annotation tool and label object bounding boxes in images",
-    long_description=readme + '\n\n' + history,
+    long_description=readme + "\n\n" + history,
     author="TzuTa Lin",
-    author_email='tzu.ta.lin@gmail.com',
-    url='https://github.com/tzutalin/labelImg',
+    author_email="tzu.ta.lin@gmail.com",
+    url="https://github.com/tzutalin/labelImg",
     python_requires=REQUIRES_PYTHON,
-    package_dir={'labelImg': '.'},
+    package_dir={"labelImg": "."},
     packages=required_packages,
-    entry_points={
-        'console_scripts': [
-            'labelImg=labelImg.labelImg:main'
-        ]
-    },
+    entry_points={"console_scripts": ["labelImg=labelImg.labelImg:main"]},
     include_package_data=True,
     install_requires=REQUIRED_DEP,
     license="MIT license",
     zip_safe=False,
-    keywords='labelImg labelTool development annotation deeplearning',
+    keywords="labelImg labelTool development annotation deeplearning",
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
-    package_data={'data/predefined_classes.txt': ['data/predefined_classes.txt']},
-    options={'py2app': OPTIONS},
+    package_data={"data/predefined_classes.txt": ["data/predefined_classes.txt"]},
+    options={"py2app": OPTIONS},
     setup_requires=SET_REQUIRES,
     # $ setup.py publish support.
     cmdclass={
-        'upload': UploadCommand,
-    }
+        "upload": UploadCommand,
+    },
 )
