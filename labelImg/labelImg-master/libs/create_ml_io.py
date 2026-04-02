@@ -1,17 +1,18 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-
 import json
+import os
 from pathlib import Path
 
 from libs.constants import DEFAULT_ENCODING
-import os
 
-JSON_EXT = '.json'
+JSON_EXT = ".json"
 ENCODE_METHOD = DEFAULT_ENCODING
 
 
 class CreateMLWriter:
-    def __init__(self, folder_name, filename, img_size, shapes, output_file, database_src='Unknown', local_img_path=None):
+    def __init__(
+        self, folder_name, filename, img_size, shapes, output_file, database_src="Unknown", local_img_path=None
+    ):
         self.folder_name = folder_name
         self.filename = filename
         self.database_src = database_src
@@ -24,17 +25,13 @@ class CreateMLWriter:
 
     def write(self):
         if os.path.isfile(self.output_file):
-            with open(self.output_file, "r") as file:
+            with open(self.output_file) as file:
                 input_data = file.read()
                 output_dict = json.loads(input_data)
         else:
             output_dict = []
 
-        output_image_dict = {
-            "image": self.filename,
-            "verified": self.verified,
-            "annotations": []
-        }
+        output_image_dict = {"image": self.filename, "verified": self.verified, "annotations": []}
 
         for shape in self.shapes:
             points = shape["points"]
@@ -46,15 +43,7 @@ class CreateMLWriter:
 
             height, width, x, y = self.calculate_coordinates(x1, x2, y1, y2)
 
-            shape_dict = {
-                "label": shape["label"],
-                "coordinates": {
-                    "x": x,
-                    "y": y,
-                    "width": width,
-                    "height": height
-                }
-            }
+            shape_dict = {"label": shape["label"], "coordinates": {"x": x, "y": y, "width": width, "height": height}}
             output_image_dict["annotations"].append(shape_dict)
 
         # check if image already in output
@@ -105,7 +94,7 @@ class CreateMLReader:
             print("JSON decoding failed")
 
     def parse_json(self):
-        with open(self.json_path, "r") as file:
+        with open(self.json_path) as file:
             input_data = file.read()
 
         # Returns a list
