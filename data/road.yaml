@@ -2,4 +2,4 @@ train: dataset/images/train
 val: dataset/images/train
 
 nc: 1
-names: ['road']
+names: ["road"]
