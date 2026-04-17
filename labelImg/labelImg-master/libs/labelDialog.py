@@ -1,20 +1,19 @@
 try:
-    from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+    from PyQt5.QtGui import *
     from PyQt5.QtWidgets import *
 except ImportError:
-    from PyQt4.QtGui import *
     from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
 
-from libs.utils import new_icon, label_validator, trimmed
+from libs.utils import label_validator, new_icon, trimmed
 
 BB = QDialogButtonBox
 
 
 class LabelDialog(QDialog):
-
     def __init__(self, text="Enter object label", parent=None, list_item=None):
-        super(LabelDialog, self).__init__(parent)
+        super().__init__(parent)
 
         self.edit = QLineEdit()
         self.edit.setText(text)
@@ -28,8 +27,8 @@ class LabelDialog(QDialog):
         self.edit.setCompleter(completer)
 
         self.button_box = bb = BB(BB.Ok | BB.Cancel, Qt.Horizontal, self)
-        bb.button(BB.Ok).setIcon(new_icon('done'))
-        bb.button(BB.Cancel).setIcon(new_icon('undo'))
+        bb.button(BB.Ok).setIcon(new_icon("done"))
+        bb.button(BB.Cancel).setIcon(new_icon("undo"))
         bb.accepted.connect(self.validate)
         bb.rejected.connect(self.reject)
 
@@ -54,9 +53,8 @@ class LabelDialog(QDialog):
     def post_process(self):
         self.edit.setText(trimmed(self.edit.text()))
 
-    def pop_up(self, text='', move=True):
-        """
-        Shows the dialog, setting the current text to `text`, and blocks the caller until the user has made a choice.
+    def pop_up(self, text="", move=True):
+        """Shows the dialog, setting the current text to `text`, and blocks the caller until the user has made a choice.
         If the user entered a label, that label is returned, otherwise (i.e. if the user cancelled the action)
         `None` is returned.
         """
