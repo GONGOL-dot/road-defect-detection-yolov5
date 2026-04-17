@@ -24,7 +24,7 @@ History
 1.8.2 (2018-12-02)
 ------------------
 
-* Fix pip depolyment issue
+* Fix pip deployment issue
 
 
 1.8.1 (2018-12-02)
@@ -37,7 +37,7 @@ History
 1.8.0 (2018-10-21)
 ------------------
 
-* Support drawing sqaure rect
+* Support drawing square rect
 * Add item single click slot
 * Fix issues
 
@@ -63,7 +63,7 @@ History
 1.5.2 (2017-10-24)
 ------------------
 
-* Assign different colors to different lablels
+* Assign different colors to different labels
 
 1.5.1 (2017-9-27)
 ------------------
