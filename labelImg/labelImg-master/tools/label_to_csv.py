@@ -1,16 +1,15 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 Name: label_to_csv.py
 Author: Justin Ruan
 Contact: justin900429@gmail.com
-Time: 2021.02.06
+Time: 2021.02.06.
 """
 
-import os
 import argparse
 import codecs
+import os
 
 import pandas as pd
 
@@ -23,8 +22,7 @@ def txt2csv(location, training_dir, path_prefix):
     for file in os.listdir(location):
         # Check the file name ends with txt
         #  and not class.txt
-        if (not file.endswith(".txt")) | \
-                (file == "classes.txt"):
+        if (not file.endswith(".txt")) | (file == "classes.txt"):
             continue
 
         # Get the file name
@@ -132,26 +130,19 @@ def xml2csv(location, training_dir, path_prefix):
 if __name__ == "__main__":
     # Add the argument parse
     arg_p = argparse.ArgumentParser()
-    arg_p.add_argument("-p", "--prefix",
-                       required=True,
-                       type=str,
-                       help="Bucket of the cloud storage path")
-    arg_p.add_argument("-l", "--location",
-                       type=str,
-                       required=True,
-                       help="Location of the label files")
-    arg_p.add_argument("-m", "--mode",
-                       type=str,
-                       required=True,
-                       help="'xml' for converting from xml and 'txt' for converting from txt")
-    arg_p.add_argument("-o", "--output",
-                       type=str,
-                       default="res.csv",
-                       help="Output name of csv file")
-    arg_p.add_argument("-c", "--classes",
-                       type=str,
-                       default=os.path.join("..", "data", "predefined_classes.txt"),
-                       help="Label classes path")
+    arg_p.add_argument("-p", "--prefix", required=True, type=str, help="Bucket of the cloud storage path")
+    arg_p.add_argument("-l", "--location", type=str, required=True, help="Location of the label files")
+    arg_p.add_argument(
+        "-m", "--mode", type=str, required=True, help="'xml' for converting from xml and 'txt' for converting from txt"
+    )
+    arg_p.add_argument("-o", "--output", type=str, default="res.csv", help="Output name of csv file")
+    arg_p.add_argument(
+        "-c",
+        "--classes",
+        type=str,
+        default=os.path.join("..", "data", "predefined_classes.txt"),
+        help="Label classes path",
+    )
     args = vars(arg_p.parse_args())
 
     # Class labels
@@ -159,7 +150,7 @@ if __name__ == "__main__":
 
     # Load in the defined classes
     if os.path.exists(args["classes"]) is True:
-        with codecs.open(args["classes"], 'r', 'utf8') as f:
+        with codecs.open(args["classes"], "r", "utf8") as f:
             for line in f:
                 line = line.strip()
                 class_labels.append(line)
@@ -183,7 +174,6 @@ if __name__ == "__main__":
             # Process the files
 
         for class_type_dir in os.listdir(dir_name):
-
             # Check whether is dir
             if not os.path.isdir(dir_name):
                 continue
@@ -192,24 +182,19 @@ if __name__ == "__main__":
 
             # Convert the chosen extension to csv
             if args["mode"] == "txt":
-                res.extend(txt2csv(f"{dir_name}/{class_type_dir}",
-                                   training_type_dir,
-                                   prefix))
+                res.extend(txt2csv(f"{dir_name}/{class_type_dir}", training_type_dir, prefix))
             elif args["mode"] == "xml":
-                res.extend(xml2csv(f"{dir_name}/{class_type_dir}",
-                                   training_type_dir,
-                                   prefix))
+                res.extend(xml2csv(f"{dir_name}/{class_type_dir}", training_type_dir, prefix))
             else:
-                print("Wrong argument for convert mode.\n"
-                      "'xml' for converting from xml to csv\n"
-                      "'txt' for converting from txt to csv")
+                print(
+                    "Wrong argument for convert mode.\n"
+                    "'xml' for converting from xml to csv\n"
+                    "'txt' for converting from txt to csv"
+                )
                 exit(1)
 
     # Write to the result csv
-    res_csv = pd.DataFrame(res,
-                           columns=["set", "path", "label",
-                                    "x_min", "y_min",
-                                    "x_max", "y_min",
-                                    "x_max", "y_max",
-                                    "x_min", "y_max"])
+    res_csv = pd.DataFrame(
+        res, columns=["set", "path", "label", "x_min", "y_min", "x_max", "y_min", "x_max", "y_max", "x_min", "y_max"]
+    )
     res_csv.to_csv("res.csv", index=False, header=False)
