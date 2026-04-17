@@ -1,18 +1,17 @@
 try:
-    from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+    from PyQt5.QtGui import *
     from PyQt5.QtWidgets import QColorDialog, QDialogButtonBox
 except ImportError:
-    from PyQt4.QtGui import *
     from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
 
 BB = QDialogButtonBox
 
 
 class ColorDialog(QColorDialog):
-
     def __init__(self, parent=None):
-        super(ColorDialog, self).__init__(parent)
+        super().__init__(parent)
         self.setOption(QColorDialog.ShowAlphaChannel)
         # The Mac native dialog does not support our restore button.
         self.setOption(QColorDialog.DontUseNativeDialog)
