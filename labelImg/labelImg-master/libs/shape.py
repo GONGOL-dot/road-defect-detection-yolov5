@@ -1,16 +1,16 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 
 
 try:
-    from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+    from PyQt5.QtGui import *
 except ImportError:
-    from PyQt4.QtGui import *
     from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
+
+import sys
 
 from libs.utils import distance
-import sys
 
 DEFAULT_LINE_COLOR = QColor(0, 255, 0, 128)
 DEFAULT_FILL_COLOR = QColor(255, 0, 0, 128)
@@ -20,7 +20,7 @@ DEFAULT_VERTEX_FILL_COLOR = QColor(0, 255, 0, 255)
 DEFAULT_HVERTEX_FILL_COLOR = QColor(255, 0, 0)
 
 
-class Shape(object):
+class Shape:
     P_SQUARE, P_ROUND = range(2)
 
     MOVE_VERTEX, NEAR_VERTEX = range(2)
@@ -89,7 +89,7 @@ class Shape(object):
             color = self.select_line_color if self.selected else self.line_color
             pen = QPen(color)
             # Try using integer sizes for smoother drawing(?)
-            pen.setWidth(max(1, int(round(2.0 / self.scale))))
+            pen.setWidth(max(1, round(2.0 / self.scale)))
             painter.setPen(pen)
 
             line_path = QPainterPath()
@@ -187,7 +187,7 @@ class Shape(object):
         self._highlight_index = None
 
     def copy(self):
-        shape = Shape("%s" % self.label)
+        shape = Shape(f"{self.label}")
         shape.points = [p for p in self.points]
         shape.fill = self.fill
         shape.selected = self.selected
