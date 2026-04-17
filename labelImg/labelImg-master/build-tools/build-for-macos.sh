@@ -12,7 +12,7 @@ unzip labelImg.zip
 rm labelImg.zip
 
 # setup python3 space
-virtualenv --system-site-packages  -p python3 /tmp/labelImgSetup/labelImg-py3
+virtualenv --system-site-packages -p python3 /tmp/labelImgSetup/labelImg-py3
 source /tmp/labelImgSetup/labelImg-py3/bin/activate
 cd labelImg-master
 
