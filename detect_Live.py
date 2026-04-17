@@ -1,17 +1,16 @@
-import cv2
-import torch
 import time
 import winsound
-import geocoder
+
+import cv2
 import folium
+import geocoder
+import torch
 
 # =========================
 # LOAD YOLOv5 MODEL
 # =========================
 model = torch.hub.load(
-    'ultralytics/yolov5',
-    'custom',
-    path='D:/road-defect-detection-yolov5-main/runs/train/exp2/weights/best.pt'
+    "ultralytics/yolov5", "custom", path="D:/road-defect-detection-yolov5-main/runs/train/exp2/weights/best.pt"
 )
 
 # Lower confidence for better detection
@@ -31,17 +30,19 @@ last_alert_time = 0
 last_saved_time = 0
 locations = []
 
+
 # =========================
 # GPS FUNCTION
 # =========================
 def get_location():
     try:
-        g = geocoder.ip('me')
+        g = geocoder.ip("me")
         if g.latlng is None:
             return [17.3850, 78.4867]  # fallback
         return g.latlng
     except:
         return [17.3850, 78.4867]
+
 
 # =========================
 # MAIN LOOP
@@ -108,15 +109,7 @@ while True:
     # =========================
     # DISPLAY
     # =========================
-    cv2.putText(
-        annotated_frame,
-        "AI Pothole Detection",
-        (20, 30),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.7,
-        (0, 0, 255),
-        2
-    )
+    cv2.putText(annotated_frame, "AI Pothole Detection", (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
 
     cv2.imshow("Pothole Detection", annotated_frame)
 
